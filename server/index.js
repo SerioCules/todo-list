@@ -6,7 +6,7 @@ const serve = require('koa-static')
 
 const app = new Koa()
 app.use(logger((str, args) => {
-    if(!str.includes("ico")) {
+    if(!str.includes("favicon.ico")) {
         console.log(str)
     }
 }))
