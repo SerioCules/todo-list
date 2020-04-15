@@ -1,10 +1,10 @@
 {
   "name": "todo-list",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server/index.js",
+    "install": "npm install --save koa koa-static @koa/router koa-logger koa-favicon"
   },
   "repository": {
     "type": "git",
@@ -16,5 +16,14 @@
   "bugs": {
     "url": "https://github.com/SerioCules/todo-list/issues"
   },
-  "homepage": "https://github.com/SerioCules/todo-list#readme"
+  "homepage": "https://github.com/SerioCules/todo-list#readme",
+  "dependencies": {
+    "@koa/router": "^9.0.0",
+    "koa": "^2.11.0",
+    "koa-favicon": "^2.1.0",
+    "koa-logger": "^3.2.1",
+    "koa-static": "^5.0.0"
+  },
+  "devDependencies": {},
+  "description": ""
 }
