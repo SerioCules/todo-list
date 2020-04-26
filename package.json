@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node server/index.js",
-    "install": "npm install --save koa koa-static @koa/router koa-logger koa-favicon"
+    "install": "npm install --save koa koa-static @koa/router koa-logger koa-favicon",
+    "test": ""
   },
   "repository": {
     "type": "git",
