@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node server/index.js",
-    "install": "npm install --save koa koa-static @koa/router koa-logger koa-favicon"
+    "start": "node server/index.js"
   },
   "repository": {
     "type": "git",
