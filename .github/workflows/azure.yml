@@ -17,7 +17,7 @@ jobs:
         node-version: '10.x'
 
     - name: 'Install dependencies'
-      run: npm install
+      run: "npm install --save koa koa-static @koa/router koa-logger koa-favicon"
        
     - name: 'Deploy to Azure WebApp'
       uses: azure/webapps-deploy@v1
