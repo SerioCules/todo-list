@@ -15,7 +15,7 @@ jobs:
 
     - name: 'Install dependencies'
       run: |
-      npm install
+        npm install
        
     - name: 'Deploy to Azure WebApp'
       uses: azure/webapps-deploy@v1
