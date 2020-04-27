@@ -31,4 +31,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: 'Run test' 
-      uses: 'npm run test'
+      uses: |
+        npm run test
