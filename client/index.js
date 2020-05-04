@@ -10,6 +10,12 @@ const addTask = async () => {
     'Content-Type': 'application/json; charset=utf-8'
   })
 
+  if (data.get('title') == "") {
+    addTaskMsg.textContent = 'Twój tytuł jest pusty, wypełnij go aby wysłać zadanie.'
+    addTaskMsg.classList.add('is-danger')
+    throw Error('Twój tytuł jest pusty, wypełnij go aby wysłać zadanie.')
+  }
+
   const body = JSON.stringify({
     title: data.get('title'),
     description: data.get('description')
