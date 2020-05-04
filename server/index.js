@@ -3,6 +3,8 @@ const logger = require('koa-logger')
 const Koa = require('koa')
 const favicon = require('koa-favicon');
 const serve = require('koa-static')
+const parse = require('koa-bodyparser')
+
 require('../store').init()
 
 const app = new Koa()
@@ -11,6 +13,8 @@ app.use(logger((str, args) => {
         console.log(str)
     }
 }))
+app.use(parse())
+
 app.use(favicon(__dirname + '/../client/favicon.ico'));
 const port = process.env.PORT || 3000
 
