@@ -5,7 +5,15 @@ const table = 'tasks'
 const init = async () => (
   new Promise((resolve, reject) => {
     service.createTableIfNotExists(table, (error, result, response) => {
-      !error ? resolve() : reject()
+      if (!error) {
+        console.log("Table Created / already exists")
+        resolve()
+      }
+      else {
+        console.log("Unable to create table")
+        init()
+        reject()
+      }
     })
   })
 )
