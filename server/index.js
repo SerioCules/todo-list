@@ -3,6 +3,7 @@ const logger = require('koa-logger')
 const Koa = require('koa')
 const favicon = require('koa-favicon');
 const serve = require('koa-static')
+require('../store').init() // L3_8 zakończone
 
 const app = new Koa()
 app.use(logger((str, args) => {
