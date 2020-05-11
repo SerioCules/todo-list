@@ -9,11 +9,7 @@ router.post('/', async (ctx) => {
 })
 
 router.get('/', async (ctx) => {
-  ctx.status = 501
-})
-
-router.post('/', async (ctx) => {
-  ctx.status = 501
+  ctx.response.body = await store.listTasks()
 })
 
 router.delete('/', async (ctx) => {

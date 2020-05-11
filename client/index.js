@@ -4,6 +4,9 @@ const addTaskDescription = document.querySelector('#description')
 const addTaskBtn = document.querySelector('#addTaskBtn')
 const addTaskMsg = document.querySelector('#addTaskMsg')
 
+const tasksList = document.querySelector('#tasksList')
+const tasksListMsg = document.querySelector('#tasksListMsg')
+
 const addTask = async () => {
   const data = new FormData(addTaskForm)
 
@@ -25,6 +28,38 @@ const addTask = async () => {
   return await fetch('/api/tasks', { method: 'POST', headers, body })
 }
 
+const listTasks = async () => {
+  tasksList.innerHTML = ''
+  tasksListMsg.classList.remove('is-danger')
+  tasksListMsg.classList.add('is-hidden')
+  
+  fetch('/api/tasks')
+  .then((response) => {
+    if (!response.ok) {
+      throw Error(response.statusText)
+    }
+    
+    return response.json()
+  })
+  .then((response) => {
+    response.forEach((task) => {
+      const title = document.createElement('td')
+      title.innerHTML = `<p>${task.title}</p>`
+      
+      const row = document.createElement('tr')
+      row.appendChild(title)
+      
+      tasksList.appendChild(row)
+    })
+  })
+  .catch(() => {
+    tasksListMsg.textContent = 'Wystąpił błąd podczas pobierania listy zadań. Spróbuj ponownie później.'
+    tasksListMsg.classList.add('is-danger')
+  })
+}
+
+listTasks()
+
 addTaskForm.addEventListener('submit', (event) => {
   event.preventDefault()
 
@@ -43,6 +78,8 @@ addTaskForm.addEventListener('submit', (event) => {
         addTaskMsg.classList.add('is-success')
         addTaskTitle.value = ''
         addTaskDescription.value = ''
+
+        listTasks()
       })
       .catch((error) => {
         addTaskMsg.textContent = error.message
