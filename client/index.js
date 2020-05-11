@@ -44,10 +44,20 @@ const listTasks = async () => {
   .then((response) => {
     response.forEach((task) => {
       const title = document.createElement('td')
+      const description = document.createElement('td')
+
       title.innerHTML = `<p>${task.title}</p>`
+
+      if (task.description == null) {
+        description.innerHTML = `<p>Brak opisu</p>`
+      }
+      else {
+        description.innerHTML = `<p>${task.description}</p>`
+      }
       
       const row = document.createElement('tr')
       row.appendChild(title)
+      row.appendChild(description)
       
       tasksList.appendChild(row)
     })
