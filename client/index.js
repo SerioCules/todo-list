@@ -6,6 +6,46 @@ const addTaskMsg = document.querySelector('#addTaskMsg')
 
 const tasksList = document.querySelector('#tasksList')
 const tasksListMsg = document.querySelector('#tasksListMsg')
+const sortButton = document.querySelector('#sort')
+
+var sort = 0 // 0-2
+
+function transformTime(string) {
+  var temp = "" + string;
+  temp = temp.replace("W/\"datetime'", "") .replace("%3A", ":").replace("%3A", ":").split(".")[0]
+  return new Date(temp)
+}
+
+function dateToString(date) {
+  return compileTime(date.getDate()) + "." + compileTime(date.getMonth()) + "." + compileTime(date.getFullYear()) + ", " + compileTime(date.getHours()) + ":" + compileTime(date.getMinutes()) + ":" + compileTime(date.getSeconds());
+}
+
+function compileTime(string) {
+  temp = string.toString()
+  if (string.toString().length < 2) {
+    temp = "0" + string.toString()
+  }
+  return temp
+}
+
+function sortList() {
+  sort += 1
+  if (sort > 2) {
+    sort = 0
+  }
+
+  if (sort == 0) {
+    sortButton.innerHTML = "Wyłącz sortowanie"
+  }
+  else if (sort == 1) {
+    sortButton.innerHTML = "Sortuj od najstarszych"
+  }
+  else if (sort == 2) {
+    sortButton.innerHTML = "Sortuj od najnowszych"
+  }
+
+  listTasks()
+}
 
 const addTask = async () => {
   const data = new FormData(addTaskForm)
@@ -42,6 +82,7 @@ const listTasks = async () => {
     return response.json()
   })
   .then((response) => {
+    objectsToAppend = []
     response.forEach((task) => {
       const actions = document.createElement('td')
       const description = document.createElement('td')
@@ -57,7 +98,9 @@ const listTasks = async () => {
         description.innerHTML = `<p>${task.description}</p>`
       }
 
-      time.innerHTML = `<p>${task.time}</p>`
+      date = transformTime(task.time);
+
+      time.innerHTML = `<p>${dateToString(date)}</p>`
 
       actions.classList.add('has-text-right')
       actions.innerHTML = `<button class="button is-small is-primary" id="deleteTask${task.id}" onclick="completeTask('${task.id}');"><span class="icon is-small"><i class="fas fa-check"></i></span></button>`
@@ -68,7 +111,16 @@ const listTasks = async () => {
       row.appendChild(time)
       row.appendChild(actions)
       
-      tasksList.appendChild(row)
+      objectsToAppend.push({row: row, time: date})
+    })
+    if (sort == 1) {
+      objectsToAppend.sort(function(a, b) { return a.time.getTime() - b.time.getTime(); })
+    }
+    else if (sort == 2) {
+      objectsToAppend.sort(function(a, b) { return b.time.getTime() - a.time.getTime(); })
+    }
+    objectsToAppend.forEach((task) => {
+      tasksList.appendChild(task.row)
     })
   })
   .catch(() => {
